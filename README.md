@@ -1,11 +1,13 @@
-# Marduk.Controls
+# WaterFallView
+
 Yet another controls library for Universal Windows Apps.
 
 # Nuget
-[Marduk.Controls](https://www.nuget.org/packages/Marduk.Controls/)
+[![NuGet version](https://badge.fury.io/nu/WaterFallView.svg)](https://badge.fury.io/nu/WaterFallView)
+[![Build status](https://ci.appveyor.com/api/projects/status/po82afp1xlgloekh?svg=true)](https://ci.appveyor.com/project/Tlaster/waterfallview)
 
 ```
-PM> Install-Package Marduk.Controls
+PM> Install-Package WaterFallView
 ```
 
 # Controls
@@ -36,7 +38,7 @@ Easily styling the appearence of **PhotowallView** and **WaterfallFlowView** wit
 Freely random insert, remove or change an item, even it's been virtualized. 
 
 ## High Performance for Resizing
-You can use Marduk.Controls.OrientedVirtualizingPanel.Resizer to optimize resize behavior
+You can use WaterFallView.OrientedVirtualizingPanel.Resizer to optimize resize behavior
 
 
 # Quick Start
@@ -44,7 +46,7 @@ You can use Marduk.Controls.OrientedVirtualizingPanel.Resizer to optimize resize
 
 ```XAML
 <ScrollViewer>
-    <controls:WaterfallFlowView xmlns:controls="using:Marduk.Controls" x:Name="Panel" 
+    <controls:WaterfallFlowView xmlns:controls="using:WaterFallView" x:Name="Panel" 
     StackCount="3" DelayMeasure="True">
     </controls:WaterfallFlowView>
 </ScrollViewer>
@@ -54,7 +56,7 @@ You can use Marduk.Controls.OrientedVirtualizingPanel.Resizer to optimize resize
 
 ```XAML
 <ScrollViewer>
-    <controls:WaterfallFlowView xmlns:controls="using:Marduk.Controls" x:Name="Panel" 
+    <controls:WaterfallFlowView xmlns:controls="using:WaterFallView" x:Name="Panel" 
     ItemSource="{Binding VM.Items}" StackCount="3" DelayMeasure="True">
     </controls:WaterfallFlowView>
 </ScrollViewer>
@@ -64,7 +66,7 @@ You can use Marduk.Controls.OrientedVirtualizingPanel.Resizer to optimize resize
 
 ```XAML
 <ScrollViewer>
-    <controls:WaterfallFlowView xmlns:controls="using:Marduk.Controls" x:Name="Panel" 
+    <controls:WaterfallFlowView xmlns:controls="using:WaterFallView" x:Name="Panel" 
     ItemSource="{Binding}" StackCount="3" DelayMeasure="True">
         <controls:WaterfallFlowView.ItemContainerStyle>
             <Style TargetType="ContentControl">
@@ -84,7 +86,7 @@ You can use Marduk.Controls.OrientedVirtualizingPanel.Resizer to optimize resize
 ```
 
 ### 04. Optimization for Resizing.
-#### (1) Create a resizer class which implements Marduk.Controls.IItemResizer.
+#### (1) Create a resizer class which implements WaterFallView.IItemResizer.
 
 ```CSharp
 public class MyItemResizer : IItemResizer
@@ -99,7 +101,7 @@ public class MyItemResizer : IItemResizer
 
 ```XAML
 <ScrollViewer>
-    <controls:WaterfallFlowView xmlns:controls="using:Marduk.Controls" x:Name="Panel" ItemSource="{Binding}" StackCount="3" DelayMeasure="True">
+    <controls:WaterfallFlowView xmlns:controls="using:WaterFallView" x:Name="Panel" ItemSource="{Binding}" StackCount="3" DelayMeasure="True">
         <controls:WaterfallFlowView.Resizer>
             <local:MyItemResizer/>
         </controls:WaterfallFlowView.Resizer>
