@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata minClientVersion="2.8.6">
+        <id>WaterFallView</id>
+        <version>1.0.0</version>
+        <title>WaterFallView</title>
+        <authors>higan, Tlaster</authors>
+        <owners>tlaster</owners>
+        <description>Yet another controls library for Universal Windows Apps.Fork version by Tlaster</description>
+        <projectUrl>https://github.com/Tlaster/WaterFallView</projectUrl>
+        <licenseUrl>https://github.com/Tlaster/WaterFallView/blob/master/LICENSE</licenseUrl>
+        <copyright>Copyright (c) Tlaster. All rights reserved.</copyright>
+        <tags>Controls ListView Photowall Photowall WinRT XAML Windows UWP UAP Universal Windows Platform</tags>
+    </metadata>
+
+    <files>
+      <file target="lib\uap10.0\WaterFallView.winmd"                       src="Release\WaterFallView\WaterFallView.winmd" />
+      <file target="lib\uap10.0\WaterFallView.pri"                         src="Release\WaterFallView\WaterFallView.pri" />
+      <file target="lib\uap10.0\WaterFallView\Themes\Generic.xbf"          src="Release\WaterFallView\Themes\Generic.xbf" />
+      <file target="runtimes\win10-arm\native\WaterFallView.dll"           src="ARM\Release\WaterFallView\WaterFallView.dll" />
+      <file target="runtimes\win10-x64\native\WaterFallView.dll"           src="x64\Release\WaterFallView\WaterFallView.dll" />
+      <file target="runtimes\win10-x86\native\WaterFallView.dll"           src="Release\WaterFallView\WaterFallView.dll" />
+    </files>
+</package>

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "WaterfallFlowView.h"
 
-using namespace Marduk::Controls;
+using namespace WaterFallView;
 
 DependencyProperty^ WaterfallFlowView::_spacingProperty = nullptr;
 DependencyProperty^ WaterfallFlowView::_stackCountProperty = nullptr;
@@ -45,9 +45,9 @@ void WaterfallFlowView::RegisterDependencyProperties()
     {
         _adaptiveModeProperty = DependencyProperty::Register(
             nameof(AdaptiveMode),
-            typeof(Marduk::Controls::AdaptiveMode),
+            typeof(WaterFallView::AdaptiveMode),
             typeof(WaterfallFlowView),
-            ref new PropertyMetadata(false,
+            ref new PropertyMetadata(WaterFallView::AdaptiveMode::Disable,
                 ref new PropertyChangedCallback(
                     &WaterfallFlowView::OnAdaptiveModeChangedStatic)));
     }
@@ -137,10 +137,10 @@ void WaterfallFlowView::OnAdaptiveModeChangedStatic(DependencyObject^ sender, Wi
     switch (panel->AdaptiveMode)
     {
     default:
-    case Marduk::Controls::AdaptiveMode::Disable:
+    case WaterFallView::AdaptiveMode::Disable:
         break;
-    case Marduk::Controls::AdaptiveMode::MaxBased:
-    case Marduk::Controls::AdaptiveMode::MinBased:
+    case WaterFallView::AdaptiveMode::MaxBased:
+    case WaterFallView::AdaptiveMode::MinBased:
         panel->ResetStackCount();
         break;
     }
@@ -158,10 +158,10 @@ void WaterfallFlowView::OnMaxItemWidthChangedStatic(DependencyObject^ sender, Wi
     switch (panel->AdaptiveMode)
     {
     default:
-    case Marduk::Controls::AdaptiveMode::Disable:
-    case Marduk::Controls::AdaptiveMode::MinBased:
+    case WaterFallView::AdaptiveMode::Disable:
+    case WaterFallView::AdaptiveMode::MinBased:
         break;
-    case Marduk::Controls::AdaptiveMode::MaxBased:
+    case WaterFallView::AdaptiveMode::MaxBased:
         panel->ResetStackCount();
         break;
     }
@@ -179,10 +179,10 @@ void WaterfallFlowView::OnMinItemWidthChangedStatic(DependencyObject^ sender, Wi
     switch (panel->AdaptiveMode)
     {
     default:
-    case Marduk::Controls::AdaptiveMode::Disable:
-    case Marduk::Controls::AdaptiveMode::MaxBased:
+    case WaterFallView::AdaptiveMode::Disable:
+    case WaterFallView::AdaptiveMode::MaxBased:
         break;
-    case Marduk::Controls::AdaptiveMode::MinBased:
+    case WaterFallView::AdaptiveMode::MinBased:
         panel->ResetStackCount();
         break;
     }
@@ -200,15 +200,15 @@ void WaterfallFlowView::ResetStackCount(Size availableSize)
     switch (this->AdaptiveMode)
     {
     default:
-    case Marduk::Controls::AdaptiveMode::Disable:
+    case WaterFallView::AdaptiveMode::Disable:
         break;
-    case Marduk::Controls::AdaptiveMode::MinBased:
+    case WaterFallView::AdaptiveMode::MinBased:
     {
         int maxStackCount = (int)((width + Spacing) / (MinItemWidth + Spacing));
         StackCount = max(maxStackCount, 1);
     }
     break;
-    case Marduk::Controls::AdaptiveMode::MaxBased:
+    case WaterFallView::AdaptiveMode::MaxBased:
     {
         int minStackCount = (int)((width + Spacing) / (MaxItemWidth + Spacing));
         StackCount = max(minStackCount, 1);

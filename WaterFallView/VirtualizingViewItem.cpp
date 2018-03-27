@@ -6,7 +6,7 @@
 #include "pch.h"
 #include "VirtualizingViewItem.h"
 
-using namespace Marduk::Controls;
+using namespace WaterFallView;
 
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -30,7 +30,7 @@ DependencyProperty^ VirtualizingViewItem::_isSelectedProperty = DependencyProper
 
 VirtualizingViewItem::VirtualizingViewItem()
 {
-    DefaultStyleKey = "Marduk.Controls.VirtualizingViewItem";
+    DefaultStyleKey = "WaterFallView.VirtualizingViewItem";
 }
 
 void VirtualizingViewItem::OnPointerPressed(PointerRoutedEventArgs^ e)

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "VisualWindow.h"
 
-using namespace Marduk::Controls;
+using namespace WaterFallView;
 bool VisualWindowExtension::Contain(VisualWindow window, VisualWindow otherWindow)
 {
     return window.Offset <= otherWindow.Offset && GetEndOffset(window) >= GetEndOffset(otherWindow);

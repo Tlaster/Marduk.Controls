@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "PhotowallUnit.h"
 
-using namespace Marduk::Controls;
+using namespace WaterFallView;
 
 PhotowallUnit::PhotowallUnit(Platform::Object^ item, Size desiredSize)
 {

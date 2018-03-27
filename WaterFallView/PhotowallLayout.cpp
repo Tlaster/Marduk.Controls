@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "PhotowallLayout.h"
 
-using namespace Marduk::Controls;
+using namespace WaterFallView;
 
 PhotowallLayout::PhotowallLayout(double spacing, double width, double unitSize)
 {

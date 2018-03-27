@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "WaterfallFlowUnit.h"
 
-using namespace Marduk::Controls;
+using namespace WaterFallView;
 
 WaterfallFlowUnit::WaterfallFlowUnit(Platform::Object^ item, Size desiredSize)
 {

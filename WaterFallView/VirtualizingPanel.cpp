@@ -2,12 +2,12 @@
 #include "VirtualizingPanel.h"
 #include <ppltasks.h>
 
-using namespace Marduk::Controls;
+using namespace WaterFallView;
 using namespace concurrency;
 
 DependencyProperty^ VirtualizingPanel::_itemContainerStyleProperty = nullptr;
 DependencyProperty^ VirtualizingPanel::_itemContainerStyleSelectorProperty = nullptr;
-DependencyProperty^ VirtualizingPanel::_itemSourceProperty = nullptr;
+DependencyProperty^ VirtualizingPanel::_itemsSourceProperty = nullptr;
 DependencyProperty^ VirtualizingPanel::_itemTemplateProperty = nullptr;
 DependencyProperty^ VirtualizingPanel::_itemTemplateSelectorProperty = nullptr;
 
@@ -28,8 +28,8 @@ VirtualizingPanel::VirtualizingPanel()
     _recycledContainers = ref new Vector<VirtualizingViewItem^>();
     _itemContainerMap = ref new UnorderedMap<Object^, VirtualizingViewItem^, HashObject>();
 
-    _items->VectorChanged += ref new Windows::Foundation::Collections::VectorChangedEventHandler<Object ^>(this, &Marduk::Controls::VirtualizingPanel::OnItemsChanged);
-    _selectedItems->VectorChanged += ref new Windows::Foundation::Collections::VectorChangedEventHandler<Platform::Object ^>(this, &Marduk::Controls::VirtualizingPanel::OnSeletionChanged);
+    _items->VectorChanged += ref new Windows::Foundation::Collections::VectorChangedEventHandler<Object ^>(this, &WaterFallView::VirtualizingPanel::OnItemsChanged);
+    _selectedItems->VectorChanged += ref new Windows::Foundation::Collections::VectorChangedEventHandler<Platform::Object ^>(this, &WaterFallView::VirtualizingPanel::OnSeletionChanged);
 
     UIElement::AddHandler(UIElement::TappedEvent, ref new Input::TappedEventHandler(this, &VirtualizingPanel::OnItemTapped), true);
     UIElement::AddHandler(UIElement::DoubleTappedEvent, ref new Input::DoubleTappedEventHandler(this, &VirtualizingPanel::OnItemDoubleTapped), true);
@@ -67,15 +67,15 @@ void VirtualizingPanel::RegisterDependencyProperties()
                 ref new PropertyChangedCallback(
                     &VirtualizingPanel::OnItemContainerStyleChangedStatic)));
     }
-    if (_itemSourceProperty == nullptr)
+    if (_itemsSourceProperty == nullptr)
     {
-        _itemSourceProperty = DependencyProperty::Register(
-            nameof(ItemSource),
+        _itemsSourceProperty = DependencyProperty::Register(
+            nameof(ItemsSource),
             typeof(Object),
             typeof(VirtualizingPanel),
             ref new PropertyMetadata(nullptr,
                 ref new PropertyChangedCallback(
-                    &VirtualizingPanel::OnItemSourceChangedStatic)));
+                    &VirtualizingPanel::OnItemsSourceChangedStatic)));
     }
     if (_itemTemplateProperty == nullptr)
     {
@@ -393,11 +393,21 @@ Object^ VirtualizingPanel::GetItemFormIndex(int index)
     {
         throw ref new OutOfBoundsException("Index out of bounds.");
     }
-
-    return _items->GetAt(index);
+	return _items->GetAt(index);
 }
 
-void VirtualizingPanel::OnItemSourceChangedStatic(DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e)
+int VirtualizingPanel::GetIndexFormItem(Platform::Object^ item) 
+{
+	if (item == nullptr)
+	{
+		throw ref new InvalidArgumentException();
+	}
+	unsigned int index;
+	_items->IndexOf(item, &index);
+	return index;
+}
+
+void VirtualizingPanel::OnItemsSourceChangedStatic(DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e)
 {
     auto panel = dynamic_cast<VirtualizingPanel^>(sender);
 
@@ -406,7 +416,7 @@ void VirtualizingPanel::OnItemSourceChangedStatic(DependencyObject^ sender, Wind
         return;
     }
 
-    panel->OnItemSourceChanged(e->NewValue, e->OldValue);
+    panel->OnItemsSourceChanged(e->NewValue, e->OldValue);
 }
 
 void VirtualizingPanel::OnItemTemplateChangedStatic(DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e)
@@ -561,7 +571,7 @@ void VirtualizingPanel::OnItemTemplateSelectorChanged(WinCon::DataTemplateSelect
     }
 }
 
-void VirtualizingPanel::OnItemSourceChanged(Object^ newItems, Object^ oldItems)
+void VirtualizingPanel::OnItemsSourceChanged(Object^ newItems, Object^ oldItems)
 {
     this->RecycleAllItem();
     _itemContainerMap->Clear();
@@ -593,7 +603,7 @@ void VirtualizingPanel::OnItemSourceChanged(Object^ newItems, Object^ oldItems)
     nc = dynamic_cast<Windows::UI::Xaml::Interop::INotifyCollectionChanged^>(newItems);
     if (nc != nullptr)
     {
-        _collectionEventToken = nc->CollectionChanged += ref new Windows::UI::Xaml::Interop::NotifyCollectionChangedEventHandler(this, &Marduk::Controls::VirtualizingPanel::OnCollectionChanged);
+        _collectionEventToken = nc->CollectionChanged += ref new Windows::UI::Xaml::Interop::NotifyCollectionChangedEventHandler(this, &WaterFallView::VirtualizingPanel::OnCollectionChanged);
     }
 
     _sil = nullptr;
@@ -740,7 +750,7 @@ VirtualizingViewItem^  VirtualizingPanel::RealizeItem(Object^ item)
 
     PrepareContainerForItemOverride(container, item);
     _itemContainerMap->Insert(item, container);
-    container->SizeChangedToken = container->SizeChanged += ref new Windows::UI::Xaml::SizeChangedEventHandler(this, &Marduk::Controls::VirtualizingPanel::OnItemSizeChanged);
+    container->SizeChangedToken = container->SizeChanged += ref new Windows::UI::Xaml::SizeChangedEventHandler(this, &WaterFallView::VirtualizingPanel::OnItemSizeChanged);
     Children->Append(container);
 
     return container;

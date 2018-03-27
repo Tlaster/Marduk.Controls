@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "PhotowallView.h"
 
-using namespace Marduk::Controls;
+using namespace WaterFallView;
 
 DependencyProperty^ PhotowallView::_spacingProperty = nullptr;
 DependencyProperty^ PhotowallView::_unitSizeProperty = nullptr;
